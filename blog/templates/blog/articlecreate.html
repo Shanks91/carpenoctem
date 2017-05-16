@@ -1,0 +1,35 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block head %}
+    {{ form.media }}
+    <link type="text/css" rel="stylesheet" href="{% static "css/blog-create.css" %}">
+    <link href="{% static 'css/bodypad.css' %}" rel="stylesheet">
+{% endblock %}
+{% load crispy_forms_tags %}
+{% block body %}
+    <div class="container">
+    <div class="row">
+        <div class="col-sm-7">
+            <h2>Preview</h2>
+            <hr/>
+            <div class="content-preview">
+                <h2 id="preview-title"></h2>
+                <p id="preview-content"></p>
+            </div>
+        </div>
+        <div class="col-sm-5">
+<h2>Write Article</h2>
+            <hr/>
+  <form method="post" class="form col-md-12 center-block" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+    <script src="{% static 'js/article_create.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% load i18n %}
+
+
+<li>
+  <div class="feed-container">
+    <a href="#" class="anchor-username"><h4 class="media-heading">{{ ngo.name }}</h4></a>
+    <div class="post">
+      <h3><a href="#">{{ ngo.name }}</a> <small>>{{ happening.creation_date }}</small></h3>
+      <p>{{ happening.content }}</p>
+      <div class="interaction">
+        {% if user in feed.get_likers %}
+          <a href="#" class="like unlike">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+            <span class="text">{% trans 'Unlike' %}</span>
+            (<span class="like-count">{{ feed.likes }}</span>)
+          </a>
+        {% else %}
+          <a href="#" class="like">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+            <span class="text">Like</span>
+            (<span class="like-count">{{ feed.likes }}</span>)
+          </a>
+        {% endif %}
+        <a href="#" class="comment">
+          <span class="glyphicon glyphicon-comment"></span>{% trans 'Comment' %}
+          (<span class="comment-count">{{ feed.comments }}</span>)
+        </a>
+      </div>
+      <div class="comments">
+        <form role="form" method="post" action="{{ comment }}" onsubmit="return false">
+          {% csrf_token %}
+          <input type="hidden" name="feed" value="{{ feed.pk }}">
+          <input type="text" class="form-control input-sm" placeholder="{% trans 'Write a comment...' %}" name="post" maxlength="255">
+        </form>
+        <ol class="clearfix">
+          {% comment %} Place holder to load feed comments {% endcomment %}
+        </ol>
+      </div>
+    </div>
+  </div>
+</li>

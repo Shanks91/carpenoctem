@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+
+      <div class="row">
+          {% if user.is_authenticated %}
+            <div class="col-md-4">
+            <h2>Hi {{ user.username }}</h2>
+            <p>Start by checking Your Profile</p>
+            <p><a class="btn btn-default" href="{% url 'profile' %}" role="button">View Profile &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Discover Ngos</h2>
+                <p>View the best Ngos</p>
+                <p><a class="btn btn-default" href="{% url 'ngo_list' %}" role="button">Organizations &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Check Feeds</h2>
+                <p>A Glance at All Happenings</p>
+                <p><a class="btn btn-default" href="{% url 'user_feeds' %}" role="button">Feeds &raquo;</a></p>
+            </div>
+          {% else %}
+            <div class="col-md-4">
+                <h2>Please Login</h2>
+                <p>You Can't Proceed Without it..</p>
+                <p><a class="btn btn-default" href="{% url 'login' %}" role="button">Login &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Create Account</h2>
+                <p>You'll Need one in order to surf </p>
+                <p><a class="btn btn-default" href="{% url 'signup' %}" role="button">Signup &raquo;</a></p>
+            </div>
+          {% endif %}
+  </div>
+</div>
+</body>
+</html>

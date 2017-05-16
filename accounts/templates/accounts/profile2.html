@@ -1,0 +1,14 @@
+{% extends 'accounts/base.html' %}
+
+{% block body %}
+    <p>{{ user.username }}</p>
+    <p>{{ user.first_name }}</p>
+    <p>{{ user.last_name }}</p>
+    <p>{{ user.profile.gender }}</p>
+    <p>{{ user.email }}</p>
+    <p>{{ user.profile.birth_date }}</p>
+    <p>{{ user.profile.city }}</p>
+    <p>{{ user.profile.country }}</p>
+    <br/>
+<a href="{% url 'profile_edit' pk=user.id %}" class="btn btn-default">Edit Profile</a>
+{% endblock %}

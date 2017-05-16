@@ -1,0 +1,145 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block stylesheet %}
+    <link href="{% static 'css/blog-post.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-8">
+
+                <!-- Blog Post -->
+
+                <!-- Title -->
+                <h1>{{ article.title }}</h1>
+
+                <!-- Author -->
+                <p class="lead">
+                    by <a href="{% url 'profile_detail' pk=article.author.id %}">{{ article.author.username }}</a>
+                </p>
+
+                <hr>
+
+                <!-- Date/Time -->
+                <p><span class="glyphicon glyphicon-time"></span> {{ article.timestamp }}
+                    {% if request.user == article.author %}
+                <a class="btn btn-default" href="{% url 'article_delete' pk=article.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+                <a class="btn btn-default" href="{% url 'article_edit' pk=article.id %}"><span class="glyphicon glyphicon-edit"></span></a>
+                    {% endif %}
+                </p>
+                <hr>
+
+                <!-- Preview Image -->
+                <img class="img-responsive" src="{% if article.pic_med %}{{ article.pic_med.url }}
+                {% else %}http://placehold.it/900x300{% endif %}" alt="">
+
+                <hr>
+
+                <!-- Post Content -->
+                <div class="post-detail-item">
+                    {{ article.get_content_markdown }}
+                </div>
+                <hr>
+
+                <!-- Blog Comments -->
+
+                <!-- Comments Form -->
+                <div class="well">
+                    <h4>Leave a Comment:</h4>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.content }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+                <hr>
+
+                <!-- Posted Comments -->
+
+                <!-- Comment -->
+                {% for comment in comments %}
+                <div class="media">
+                    <a class="pull-left" href="{% url 'profile_detail' pk=comment.author.id %}">
+                        <div class="comment_img"><img class="media-object" src="{% if comment.author.profile.photo %}{{ comment.author.profile.photo_avatar.url }}{% else %}http://placehold.it/64x64{% endif %}" alt="">
+                    </div>
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ comment.author.username }}
+                            <small>{{ comment.timestamp }}</small>
+                        </h4>
+                        {{ comment.content }}
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <!-- Blog Sidebar Widgets Column -->
+            <div class="col-md-4">
+
+                <!-- Blog Search Well -->
+                <div class="well">
+                    <h4>Blog Search</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        </span>
+                    </div>
+                    <!-- /.input-group -->
+                </div>
+
+                <!-- Blog Categories Well -->
+                <div class="well">
+                    <h4>Blog Categories</h4>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Category Name</a>
+                                </li>
+                                <li><a href="#">Category Name</a>
+                                </li>
+                                <li><a href="#">Category Name</a>
+                                </li>
+                                <li><a href="#">Category Name</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Category Name</a>
+                                </li>
+                                <li><a href="#">Category Name</a>
+                                </li>
+                                <li><a href="#">Category Name</a>
+                                </li>
+                                <li><a href="#">Category Name</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+
+                <!-- Side Widget Well -->
+                <div class="well">
+                    <h4>Side Widget Well</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/article_create.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block stylesheet %}
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+    <link href="{% static 'css/jumbotron.css' %}" rel="stylesheet">
+{% endblock %}
+{% block ahome %}active{% endblock %}
+{% block body %}
+<!-- login model -->
+
+<div id="fullscreen_bg" class="fullscreen_bg"/>
+
+<div class="container">
+    <br>
+    <br>
+    <form class="form-signin" method="POST" action="">
+        <h1 class="form-signin-heading text-muted">Sign In</h1>
+		<div class="form-group" >
+                {% csrf_token %}
+                <p class="text-danger">{{ form.non_field_errors }}</p>
+            </div>
+        <br>
+        <div class="form-group">
+              {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+            <div class="form-group">
+              {{ form.password }}
+                {{ form.password.errors }}
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary btn-lg btn-block">Sign In</button>
+              <span class="pull-right"><a href="{% url 'signup' %}">Register</a></span><span><a href="#">Need help?</a></span>
+            </div>
+	</form>
+</div>
+
+<br>
+<br>
+<br>
+<br><br>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block stylesheet %}
+    <link href="{% static 'css/bodypad.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block body %}
+    <div class="container">
+<h2>{{ ngo.name }}</h2>
+<h3>This Organization is Moderated by <a href="{% url 'profile_detail' pk=ngo.moderator.pk %}">@{{ ngo.moderator.username }}</a></h3>
+    <a href="{% url 'follow_ngo' npk=ngo.pk upk=request.user.id %}" type="submit" class="btn btn-primary">follow</a>
+<br/>
+{% if request.user.id == ngo.moderator.id %}
+    <a href="{% url 'post_happening' pk=ngo.id %}" type="submit" class="btn btn-success">Post Happening</a>
+{% endif %}
+    <hr/>
+{% for happening in happenings %}
+    <p>{{ happening.content }}</p>
+{% endfor %}
+    </div>
+{% endblock %}

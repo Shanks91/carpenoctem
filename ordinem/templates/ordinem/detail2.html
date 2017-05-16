@@ -1,0 +1,116 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block stylesheet %}
+     <link href="{% static 'css/bodypad.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/poststyle.css' %}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+{% block body %}
+    <div class="container">
+<h2>{{ ngo.name }} <small>{{ ngo.get_round_ratings }}</small></h2>
+<h3>This Organization is Moderated by <a href="{% url 'profile_detail' pk=ngo.moderator.pk %}">@{{ ngo.moderator.username }}</a></h3>
+    <a href="{% url 'follow_ngo' npk=ngo.pk upk=request.user.id %}" type="submit" class="btn btn-primary">
+        {% if is_following %}Following{% else %}Follow{% endif %}
+        </a>
+    <a href="{% url 'gallery' pk=ngo.pk %}" type="submit" class="btn btn-info">Gallery</a>
+    <a href="{% url 'ngo_like' pk=ngo.pk %}" type="submit" class="btn btn-info">
+        {% if is_liked %}Unlike{% else %}like{% endif %}
+    <span class="badge">{{ ngo.likes.count }}</span>
+    </a>
+    <a href="{% url 'ngo_rate' pk=ngo.pk %}" type="submit" class="btn btn-warning">Give Ratings</a>
+{% if request.user.id == ngo.moderator.id %}
+    <a href="{% url 'post_happening' pk=ngo.id %}" type="submit" class="btn btn-success">Post Happening</a>
+    <a href="{% url 'post_gallery' pk=ngo.id %}" type="submit" class="btn btn-success">Post Pictures</a>
+{% endif %}
+    <hr/>
+{% for happening in happenings %}
+    <div class="container">
+    <div class="col-md-5">
+        <div class="panel panel-default">
+            <div class="panel-body">
+               <section class="post-heading">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <div class="media">
+                              <div class="media-left">
+                                <a href="#">
+                                  <img class="media-object photo-profile" src="{{ ngo.logo.url }}" width="40" height="40" alt="...">
+                                </a>
+                              </div>
+                              <div class="media-body">
+                                <a href="#" class="anchor-username"><h4 class="media-heading">{{ ngo.name }}</h4></a>
+                                <a href="#" class="anchor-time">{{ happening.creation_date|timesince }}</a>
+                              </div>
+                            </div>
+                        </div>
+                         <div class="col-md-1">
+                             <div class="dropdown">
+                             <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="{% url 'edit_happening' pk=happening.id %}">
+                                    <span class="glyphicon glyphicon glyphicon-edit"></span> Edit Post</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="{% url 'delete_happening' pk=happening.id %}">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> Delete Post</a></li>
+                              </ul>
+                             </div>
+                         </div>
+                    </div>
+               </section>
+               <section class="post-body">
+                   <p>{{ happening.content }}</p>
+               </section>
+              <section class="post-footer">
+                   <hr>
+                   <div class="post-footer-option container">
+                        <ul class="list-unstyled">
+                            <li><a href="{% url 'like_happening' pk=happening.id %}"><i class="glyphicon glyphicon-thumbs-up"></i>
+                              {% if request.user in happening.likes.all %}Unlike{% else %}like{% endif %} &#40 {{ happening.likes.count }} &#41</a></li>
+                            <li><a href="#collapseComment{{ happening.id }}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseComment{{ happening.id }}"><i class="glyphicon glyphicon-comment"></i> Comment</a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-share-alt"></i> Share</a></li>
+                        </ul>
+                   </div>
+                  <div class="post-footer-comment-wrapper">
+                       <div class="comment-form">
+                        <div class="collapse" id="collapseComment{{ happening.id }}">
+                            <div class="well">
+                                <form class="form" action="" method="post">
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="3"></textarea>
+
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-block">Post</button>
+                                </form>
+                            </div>
+                        </div>
+                       </div>
+
+                            <div class="comment">
+                            {% for comment in comments %}
+                            {% if comment.comment_on == happening %}
+                            <div class="media">
+                                  <div class="media-left">
+                                    <a href="#">
+                                      <img class="media-object photo-profile" src="{{ comment.author.profile.photo.url }}" width="32" height="32" alt="...">
+                                    </a>
+                                  </div>
+                                  <div class="media-body">
+                                    <a href="#" class="anchor-username"><h4 class="media-heading">{{ comment.author.username }}</h4></a>
+                                    <a href="#" class="anchor-time">{{ comment.time_stamp|timesince }}</a>
+                                  </div>
+                                    <p>{{ comment.content }}</p>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                      </div>
+
+
+                  </div>
+
+              </section>
+            </div>
+        </div>
+	</div>
+    </div>
+{% endfor %}
+    </div>
+{% endblock %}

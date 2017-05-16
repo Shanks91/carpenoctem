@@ -1,0 +1,168 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block stylesheet %}
+{% endblock %}
+{% block ahome %}active{% endblock %}
+{% block body %}
+<!-- SLIDING IMAGES -->
+<!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="row" >
+    <div class="container">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Wrapper for slides -->
+        {% if user.is_authenticated %}
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="http://placehold.it/1200x400/16a085/ffffff&text=Hi {{ user.username }}">
+                <div class="carousel-caption">
+                    <p>
+                       <p>Start by checking Your Profile</p>
+                        <p><a class="btn btn-default" href="{% url 'profile' %}" role="button">View Profile &raquo;</a></p>
+                    </p>
+                </div>
+            </div>
+            <!-- End Item -->
+            <div class="item">
+                <img src="http://placehold.it/1200x400/e67e22/ffffff&text=Discover Ngos">
+                <div class="carousel-caption">
+                    <p>
+                        <p>View the best Ngos</p>
+                        <p><a class="btn btn-default" href="{% url 'ngo_list' %}" role="button">Organizations &raquo;</a></p>
+                    </p>
+                </div>
+            </div>
+            <!-- End Item -->
+            <div class="item">
+                <img src="http://placehold.it/1200x400/2980b9/ffffff&text=Check Feeds">
+                <div class="carousel-caption">
+                    <p>
+                        <p>A Glance at All Happenings</p>
+                        <p><a class="btn btn-default" href="{% url 'user_feeds' %}" role="button">Feeds &raquo;</a></p>
+                    </p>
+                </div>
+            </div>
+            <!-- End Item -->
+            <div class="item">
+                <img src="http://placehold.it/1200x400/8e44ad/ffffff&text=About Us">
+                <div class="carousel-caption">
+                    <p>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem
+                        ipsum dolor sit amet, consetetur sadipscing elitr.</p>
+                </div>
+            </div>
+            <!-- End Item -->
+        </div>
+        <!-- End Carousel Inner -->
+        <ul class="nav nav-pills nav-justified">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"><a href="#">Your profile</a></li>
+            <li data-target="#myCarousel" data-slide-to="1"><a href="#">Ngos</a></li>
+            <li data-target="#myCarousel" data-slide-to="2"><a href="#">Feeds</a></li>
+            <li data-target="#myCarousel" data-slide-to="3"><a href="#">About us</a></li>
+        </ul>
+        <!-- if not AUTHENTICATED USER -->
+        {% else %}
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="http://placehold.it/1200x400/16a085/ffffff&text=Please Login">
+                <div class="carousel-caption">
+                    <p>
+                        <p>You Can't Proceed Without it..</p>
+                        <p><a class="btn btn-default" href="{% url 'login' %}" role="button">Login &raquo;</a></p>
+                    </p>
+                </div>
+            </div>
+            <!-- End Item -->
+            <div class="item">
+                <img src="http://placehold.it/1200x400/2980b9/ffffff&text=Create Account">
+                <div class="carousel-caption">
+                    <p>
+                        <p>You'll Need one in order to surf </p>
+                        <p><a class="btn btn-default" href="{% url 'signup' %}" role="button">Signup &raquo;</a></p>
+                    </p>
+                </div>
+            </div>
+            <!-- End Item -->
+            <div class="item">
+                <img src="http://placehold.it/1200x400/e67e22/ffffff&text=Discover Ngos">
+                <div class="carousel-caption">
+                    <p>
+                        <p>View the best Ngos</p>
+                        <p><a class="btn btn-default" href="{% url 'ngo_list' %}" role="button">Organizations &raquo;</a></p>
+                    </p>
+                </div>
+            </div>
+            <!-- End Item -->
+            <div class="item">
+                <img src="http://placehold.it/1200x400/8e44ad/ffffff&text=About Us">
+                <div class="carousel-caption">
+                    <p>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem
+                        ipsum dolor sit amet, consetetur sadipscing elitr.</p>
+                </div>
+            </div>
+
+            <!-- End Item -->
+        </div>
+        <!-- End Carousel Inner -->
+        <ul class="nav nav-pills nav-justified">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"><a href="#">Your profile</a></li>
+            <li data-target="#myCarousel" data-slide-to="1"><a href="#">Ngos</a></li>
+            <li data-target="#myCarousel" data-slide-to="2"><a href="#">Feeds</a></li>
+            <li data-target="#myCarousel" data-slide-to="3"><a href="#">About us</a></li>
+        </ul>
+        {% endif %}
+    </div>
+    <!-- End Carousel -->
+</div>
+        </div>
+
+
+<!-- make profile -->
+
+
+<!-- photo section -->
+<section class="work-info">
+    <div class="container">
+        <h1 class="text-center">OUR AIM</h1>
+          <hr>
+        <div class="row">
+
+            <div class=" col-md-6 col-sm-12">
+                <div class="work-item">
+                    <a href="#">
+                    <img src="http://suddenimpactwebdesign.com/wp-content/uploads/2015/01/me.jpg" class="img-responsive">
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12 ">
+                <div class="work-item">
+                    <a href="#">
+                    <img src="https://www.rkaink.com/wp-content/uploads/2016/04/Custom-Web-Design-for-Amanda-Abella-by-RKA-ink-2-500x333.jpg" class="img-responsive">
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12 ">
+                <div class="work-item">
+                    <a href="#">
+                    <img src="http://www.karniesolutions.com/img/portfolio/idea-best.jpg" class="img-responsive">
+                    </a>
+                </div>
+            </div>
+
+            <div class=" col-md-6 col-sm-12 col-xs-12">
+                <div class="work-item">
+                    <a href="#">
+                    <img src="https://static1.squarespace.com/static/5056838724acbaa64593ee7b/t/561472dfe4b0f9222d2e8c6b/1444180707338/?format=500w" class="img-responsive">
+                    </a>
+                </div>
+            </div>
+
+        </div><!--end of row-->
+    </div><!--end of container-->
+</section>
+ <!--end of work section-->
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block stylesheet %}
+    <link href="{% static 'css/bodypad.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block body %}
+    <div class="container">
+<h2>{{ ngo.name }}</h2>
+<h3>This Organization is Moderated by <a href="{% url 'profile_detail' pk=ngo.moderator.pk %}">@{{ ngo.moderator.username }}</a></h3>
+    <a href="{% url 'follow_ngo' npk=ngo.pk upk=request.user.id %}" type="submit" class="btn btn-primary">follow</a>
+<br/>
+<hr/>
+
+	<div class="row">
+		<h2>Gallery</h2>
+        <hr>
+	</div>
+    <div class="row">
+        {% for gallery in galleries %}
+        <span class="col-lg-3 col-sm-12 picture">
+            <a href="{{ gallery.photo.url }}"><img class="img-thumbnail" src="{{ gallery.photo.url }}"></a>
+        </span>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

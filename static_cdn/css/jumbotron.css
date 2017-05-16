@@ -1,0 +1,114 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+
+/* images */
+*
+{
+
+    transition: all .5s;
+
+}
+.img-responsive
+{
+    width: 100%; <!-- important-->
+}
+
+hr{
+    color: #e74c3c;
+    background: rgb(231, 76, 60) !important;
+    height: 5px;
+    width: 150px;
+    border-top:0px;
+}
+
+.work-item{
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+.work-info{
+   padding:50px 0px;
+   background-color: #fff;
+
+}
+.work-item a
+{
+    display: block;
+    overflow: hidden;
+}
+
+.work-item a img{
+    margin: 0 auto;
+}
+.work-item>a>img:hover{
+    transform: scale(1.2,1.2);
+
+}
+
+
+/*Slider*/
+
+
+#myCarousel .nav a small
+{
+    display: block;
+}
+#myCarousel .nav
+{
+    background: #eee;
+}
+.nav-justified > li > a
+{
+    border-radius: 0px;
+}
+.nav-pills>li[data-slide-to="0"].active a { background-color: #16a085; }
+.nav-pills>li[data-slide-to="1"].active a { background-color: #e67e22; }
+.nav-pills>li[data-slide-to="2"].active a { background-color: #2980b9; }
+.nav-pills>li[data-slide-to="3"].active a { background-color: #8e44ad; }
+
+/*Jumbotron*/
+
+.jumbotron{
+    margin-bottom:20px;
+    margin-top:20px;
+    position:center;
+
+}
+
+.pricing {
+    text-align: center;
+}
+
+/*Page Header*/
+.page-header{
+    text-align:center;
+}
+
+$(document).ready(function () {
+    $('#myCarousel').carousel({
+        interval: 4000
+    });
+
+    var clickEvent = false;
+    $('#myCarousel').on('click', '.nav a', function () {
+        clickEvent = true;
+        $('.nav li').removeClass('active');
+        $(this).parent().addClass('active');
+    }).on('slid.bs.carousel', function (e) {
+        if (!clickEvent) {
+            var count = $('.nav').children().length - 1;
+            var current = $('.nav li.active');
+            current.removeClass('active').next().addClass('active');
+            var id = parseInt(current.data('slide-to'));
+            if (count == id) {
+                $('.nav li').first().addClass('active');
+            }
+        }
+        clickEvent = false;
+    });
+});
+
+

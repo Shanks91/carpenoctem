@@ -1,0 +1,45 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block stylesheet %}
+    <link href="{% static 'css/bodypad.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block body %}
+    <div class="container">
+    <div class="row">
+        <h2>Compose</h2>
+        <hr/>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="list-group">
+              <li class="list-group-item"><button class="btn btn-success btn-block">Compose</button></li>
+              <a href="{% url 'message_inbox' %}" class="list-group-item">Inbox
+              <span class="badge">{{ mail_inbox }}</span>
+              <span class="badge">{{ mail_inbox_unread }}</span>
+              </a>
+              <a href="{% url 'message_drafts' %}" class="list-group-item">Drafts
+              <span class="badge">{{ mail_drafts }}</span>
+              </a>
+              <a href="{% url 'message_sent' %}" class="list-group-item">Sent
+              <span class="badge">{{ mail_sent }}</span>
+              </a>
+              <a href="{% url 'message_trash' %}" class="list-group-item">Trash
+              <span class="badge">{{ mail_trash }}</span>
+              </a>
+            </div>
+        </div>
+        <div class="col-md-8">
+         <form method="post" class="form" action="">
+                {% csrf_token %}
+                {{ form|crispy }}
+            <input type="submit" class="btn btn-success" name="btnSend" value="Send"/>
+             <input type="submit" class="btn btn-info" name="btnDraft" value="Draft"/>
+            </form>
+    </div>
+
+    </div>
+
+
+    </div>
+{% endblock %}

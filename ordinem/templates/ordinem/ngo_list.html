@@ -1,0 +1,40 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block stylesheet %}
+     <link href="{% static 'css/bodypad.css' %}" rel="stylesheet" type="text/css"/>
+     <link href="{% static 'css/ngoliststyle.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12">
+		    {% for ngo in ngo_list %}
+            <article>
+		        <div class="row">
+		            <div class="col-sm-6 col-md-4">
+		                <figure>
+		                    <img src="{{ ngo.logo_list.url }}">
+		                </figure>
+		            </div>
+		            <div class="col-sm-6 col-md-8">
+		                <span class="label label-default pull-right"><i class="glyphicon glyphicon-comment"></i>50</span>
+		                <h4>{{ ngo.name }}</h4>
+		                <p>skbskbskbsbsbksskbskbxkbxkbxbxkbxktincidunt ut laoreet dolore magna aliquam erat volutpat.
+                        </p>
+		                <section>
+		                    <i class="glyphicon glyphicon-folder-open"></i>Bootstrap
+		                    <i class="glyphicon glyphicon-user"></i>{{ ngo.moderator.username }}
+		                    <i class="glyphicon glyphicon-calendar"></i>{{ ngo.creation_date }}
+		                    <i class="glyphicon glyphicon-eye-open"></i>{{ ngo.likes.count }}
+		                    <a href="{% url 'ngo_profile' pk=ngo.id %}" class="btn btn-default btn-sm pull-right">More ... </a>
+		                </section>
+		            </div>
+		        </div>
+		    </article>
+            {% endfor %}
+
+
+		</div>
+	</div>
+</div>
+{% endblock %}

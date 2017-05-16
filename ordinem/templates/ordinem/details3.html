@@ -1,0 +1,89 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block stylesheet %}
+     <link href="{% static 'css/bodypad.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/poststyle.css' %} }" type="text/css" rel="stylesheet"/>
+{% endblock %}
+{% block body %}
+    <div class="container">
+<h2>{{ ngo.name }} <small>{{ ngo.get_round_ratings }}</small></h2>
+<h3>This Organization is Moderated by <a href="{% url 'profile_detail' pk=ngo.moderator.pk %}">@{{ ngo.moderator.username }}</a></h3>
+    <a href="{% url 'follow_ngo' npk=ngo.pk upk=request.user.id %}" type="submit" class="btn btn-primary">follow</a>
+    <a href="{% url 'gallery' pk=ngo.pk %}" type="submit" class="btn btn-info">Gallery</a>
+    <a href="{% url 'ngo_like' pk=ngo.pk %}" type="submit" class="btn btn-info"><span class="badge">{{ ngo.likes.count }}</span>
+        {% if is_liked %}Unlike{% else %}like{% endif %}
+    </a>
+    <a href="{% url 'ngo_rate' pk=ngo.pk %}" type="submit" class="btn btn-warning">Give Ratings</a>
+{% if request.user.id == ngo.moderator.id %}
+    <a href="{% url 'post_happening' pk=ngo.id %}" type="submit" class="btn btn-success">Post Happening</a>
+    <a href="{% url 'post_gallery' pk=ngo.id %}" type="submit" class="btn btn-success">Post Pictures</a>
+{% endif %}
+    <hr/>
+{% for happening in happenings %}
+    <div class="container">
+    <div class="col-md-5">
+        <div class="panel panel-default">
+            <div class="panel-body">
+               <section class="post-heading">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <div class="media">
+                              <div class="media-left">
+                                <a href="#">
+                                  <img class="media-object photo-profile" src="{{ ngo.logo.url }}" width="40" height="40" alt="...">
+                                </a>
+                              </div>
+                              <div class="media-body">
+                                <a href="#" class="anchor-username"><h4 class="media-heading">{{ ngo.name }}</h4></a>
+                                <a href="#" class="anchor-time">{{ happening.creation_date }}</a>
+                              </div>
+                            </div>
+                        </div>
+                         <div class="col-md-1">
+                             <a href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                         </div>
+                    </div>
+               </section>
+               <section class="post-body">
+                   <p>{{ happening.content }}</p>
+               </section>
+              <section class="post-footer">
+                   <hr>
+                   <div class="post-footer-option container">
+                        <ul class="list-unstyled">
+                            <li><a href="#"><i class="glyphicon glyphicon-thumbs-up"></i> Like</a></li>
+                            <li><a href="{% url 'post_comment' pk=happening.pk %}"><i class="glyphicon glyphicon-comment"></i> Comment</a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-share-alt"></i> Share</a></li>
+                        </ul>
+                   </div>
+                  <div class="post-footer-comment-wrapper">
+                       <div class="comment-form">
+
+                       </div>
+                        {% for comment in comments %}
+                        {% if comment.comment_on == happening %}
+                            <div class="comment">
+                            <div class="media">
+                              <div class="media-left">
+                                <a href="#">
+                                  <img class="media-object photo-profile" src="{{ comment.author.user.profile.photo.url }}" width="32" height="32" alt="...">
+                                </a>
+                              </div>
+                              <div class="media-body">
+                                <a href="#" class="anchor-username"><h4 class="media-heading">{{ comment.author.username }}</h4></a>
+                                <a href="#" class="anchor-time">{{ comment.time_stamp }}</a>
+                              </div>
+                                <p>{{ comment.content }}</p>
+                            </div>
+                       </div>
+                            {% endif %}
+                            {% endfor %}
+</div>
+               </section>
+            </div>
+        </div>
+	</div>
+    </div>
+{% endfor %}
+    </div>
+{% endblock %}

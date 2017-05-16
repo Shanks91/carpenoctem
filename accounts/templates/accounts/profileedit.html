@@ -1,0 +1,20 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+    <div class="container">
+    <div class="row">
+        <div class="col-md-4">
+<h2>Edit Your Profile</h2>
+            <hr/>
+  <form method="post" class="form col-md-12 center-block" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+      <hr/>
+      {{ formset.management_form }}
+      {{ formset|crispy }}
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+        </div>
+    </div>
+    </div>
+{% endblock %}
